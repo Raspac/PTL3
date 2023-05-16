@@ -1,4 +1,4 @@
-package com.example.authenticationsystem.presentation.signup_screen
+package com.example.authenticationsystem.presentation.login_screen
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
@@ -35,19 +35,20 @@ import androidx.compose.ui.unit.sp
 import com.example.authenticationsystem.ui.theme.RegularFont
 import com.example.authenticationsystem.ui.theme.lightBlue
 import com.example.AuthenticationSystem.R
+import com.example.authenticationsystem.presentation.signup_screen.SignUpViewModel
 import kotlinx.coroutines.launch
 
 
 
 @Composable
-fun SignUpScreen (
-    viewModel: SignUpViewModel = hiltViewModel()
+fun SignInScreen (
+    viewModel: SignInViewModel = hiltViewModel()
 ){
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
-    val state = viewModel.signUpState.collectAsState(initial = null)
+    val state = viewModel.signInState.collectAsState(initial = null)
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -88,16 +89,16 @@ fun SignUpScreen (
                 Text(text = "Password")
             }
         )
-        
+
         Button(onClick = {
             scope.launch {
-                viewModel.registerUser(email, password)
+                viewModel.loginUser(email, password)
             }
         }, modifier = Modifier
             .fillMaxWidth()
             .padding(top = 20.dp, start = 30.dp), colors = ButtonDefaults.buttonColors(
             backgroundColor = Color.Black, contentColor = Color.White
-            ), shape = RoundedCornerShape(15.dp)
+        ), shape = RoundedCornerShape(15.dp)
         ) {
             Text(text = "Sign Up", color = Color.White, modifier = Modifier.padding(7.dp))
         }
